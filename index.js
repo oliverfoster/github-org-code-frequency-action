@@ -118,6 +118,7 @@ async function freqStats(repoArray, sumArray) {
   try {
     for (repo of repoArray) {
       do {
+        console.log(repoName)
         response = await octokit.rest.repos.getCodeFrequencyStats({
           owner: org,
           repo: repo.name
@@ -176,13 +177,12 @@ async function freqStats(repoArray, sumArray) {
               allLanguages = repo.languages.nodes.map((language) => language.name).join(', ')
             }
             sumArray.push({ repoName, additions, deletions, alltimeAdditions, alltimeDeletions, createdDate, primaryLanguage, allLanguages })
-            console.log(repoName)
           }
         }
       } while (response.status === 202)
     }
   } catch (error) {
-    core.setFailed(error.message + "\"" + error.stack + "\"" + repo)
+    core.setFailed(error.message + "\"" + error.stack + "\"" + repo.name)
   }
 }
 
