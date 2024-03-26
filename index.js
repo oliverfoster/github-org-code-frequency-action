@@ -108,7 +108,7 @@ async function getRepos(repoArray) {
       }
     } while (hasNextPageMember)
   } catch (error) {
-    core.setFailed(error.message + "\"" + error.stack)
+    core.setFailed(error.message + "\n" + error.stack)
   }
 }
 
@@ -118,7 +118,6 @@ async function freqStats(repoArray, sumArray) {
   for (repo of repoArray) {
     try {
       do {
-        console.log(repo.name)
         response = await octokit.rest.repos.getCodeFrequencyStats({
           owner: org,
           repo: repo.name
@@ -177,11 +176,12 @@ async function freqStats(repoArray, sumArray) {
               allLanguages = repo.languages.nodes.map((language) => language.name).join(', ')
             }
             sumArray.push({ repoName, additions, deletions, alltimeAdditions, alltimeDeletions, createdDate, primaryLanguage, allLanguages })
+            console.log(repo.name)
           }
         }
       } while (response.status === 202)
     } catch (error) {
-      core.setFailed(error.message + "\"" + error.stack + "\"" + repo?.name)
+      console.error(error.message + "\n" + error.stack + "\n" + repo?.name)
     }
   }
 }
@@ -223,7 +223,7 @@ async function sortpushTotals(sumArray) {
 
     await octokit.rest.repos.createOrUpdateFileContents(opts)
   } catch (error) {
-    core.setFailed(error.message + "\"" + error.stack)
+    core.setFailed(error.message + "\n" + error.stack)
   }
 }
 
@@ -247,6 +247,6 @@ async function json(sumArray) {
 
     await octokit.rest.repos.createOrUpdateFileContents(opts)
   } catch (error) {
-    core.setFailed(error.message + "\"" + error.stack)
+    core.setFailed(error.message + "\n" + error.stack)
   }
 }
