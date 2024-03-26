@@ -108,7 +108,7 @@ async function getRepos(repoArray) {
       }
     } while (hasNextPageMember)
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(error.message + "\"" + error.stack)
   }
 }
 
@@ -181,7 +181,7 @@ async function freqStats(repoArray, sumArray) {
       } while (response.status === 202)
     }
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(error.message + "\"" + error.stack)
   }
 }
 
@@ -222,7 +222,7 @@ async function sortpushTotals(sumArray) {
 
     await octokit.rest.repos.createOrUpdateFileContents(opts)
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(error.message + "\"" + error.stack)
   }
 }
 
@@ -246,6 +246,6 @@ async function json(sumArray) {
 
     await octokit.rest.repos.createOrUpdateFileContents(opts)
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(error.message + "\"" + error.stack)
   }
 }
