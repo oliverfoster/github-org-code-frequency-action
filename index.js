@@ -114,7 +114,7 @@ async function getRepos(repoArray) {
 
 // Retrieve code frequency data for the repo and set interval input selection
 async function freqStats(repoArray, sumArray) {
-  let Repo
+  let repo
   for (repo of repoArray) {
     try {
       do {
