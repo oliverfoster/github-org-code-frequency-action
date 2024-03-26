@@ -114,9 +114,9 @@ async function getRepos(repoArray) {
 
 // Retrieve code frequency data for the repo and set interval input selection
 async function freqStats(repoArray, sumArray) {
-  let repo
-  try {
-    for (repo of repoArray) {
+  let Repo
+  for (repo of repoArray) {
+    try {
       do {
         console.log(repo.name)
         response = await octokit.rest.repos.getCodeFrequencyStats({
@@ -180,9 +180,9 @@ async function freqStats(repoArray, sumArray) {
           }
         }
       } while (response.status === 202)
+    } catch (error) {
+      core.setFailed(error.message + "\"" + error.stack + "\"" + repo?.name)
     }
-  } catch (error) {
-    core.setFailed(error.message + "\"" + error.stack + "\"" + repo?.name)
   }
 }
 
