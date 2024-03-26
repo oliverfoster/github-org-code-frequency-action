@@ -118,7 +118,7 @@ async function freqStats(repoArray, sumArray) {
   try {
     for (repo of repoArray) {
       do {
-        console.log(repoName)
+        console.log(repo.name)
         response = await octokit.rest.repos.getCodeFrequencyStats({
           owner: org,
           repo: repo.name
@@ -182,7 +182,7 @@ async function freqStats(repoArray, sumArray) {
       } while (response.status === 202)
     }
   } catch (error) {
-    core.setFailed(error.message + "\"" + error.stack + "\"" + repo.name)
+    core.setFailed(error.message + "\"" + error.stack + "\"" + repo?.name)
   }
 }
 
